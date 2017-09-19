@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -110,35 +112,45 @@ public class MainActivity extends AppCompatActivity {
 
         btnSom.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                operador.setList(textView.getText().toString());
-                textView.append(" + ");
+            if(textView.getText().length()>0)
+            {
+                textView.setText(operador.checkOperators(textView.getText().toString()) + " + ");
+            }
             }
         });
 
         btnSub.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                operador.setList(textView.getText().toString());
-                textView.append(" - ");
+            if(textView.getText().length()>0)
+            {
+                textView.setText(operador.checkOperators(textView.getText().toString()) + " - ");
+            }else{
+                textView.append("-");
+            }
             }
         });
 
         btnMult.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                operador.setList(textView.getText().toString());
-                textView.append(" * ");
+            if(textView.getText().length()>0)
+            {
+                textView.setText(operador.checkOperators(textView.getText().toString()) + " * ");
+            }
             }
         });
 
         btnDiv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                operador.setList(textView.getText().toString());
-                textView.append(" ÷ ");
+            if(textView.getText().length()>0)
+            {
+                textView.setText(operador.checkOperators(textView.getText().toString()) + " ÷ ");
+            }
             }
         });
 
         btnIgual.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                operador.setList(textView.getText().toString());
+                //operador.setList(textView.getText().toString());
                 //textView.setText(resultado);
             }
         });
@@ -164,8 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(textView.getText().length()==0){
                     textView.setText("0.");
-                }else
+                }else if(!textView.getText().toString().contains(".")){
                     textView.append(".");
+                }
+
             }
         });
 

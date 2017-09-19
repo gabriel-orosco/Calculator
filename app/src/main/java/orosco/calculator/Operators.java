@@ -1,54 +1,39 @@
 package orosco.calculator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by orosco on 17/09/17.
  */
 
 public class Operators {
 
-    private List<String> list = new ArrayList<String>();
-
-    public String setList (String calculo){
-        String resultado;
-        list = Arrays.asList(calculo.split("\\s+"));
-
-        if ( list.size() == 3 ){
-            resultado = String.valueOf(calcular());
-        }if (list.size()<3){
-            return calculo;
-        }else{
-            resultado = list.remove(list.size()-1);
-        }
-        return resultado;
+    private String removeOperator(String temp){
+        temp = temp.substring(0,temp.length()-3);
+        return temp;
     }
 
+    public String checkOperators(String textView){
+        if(textView.length()>=3){
+            String temp = textView.substring(textView.length()-2,textView.length()-1);
+            switch (temp) {
+                case "+":
+                    return removeOperator(textView);
 
-    private double calcular(){
+                case "-":
+                    return removeOperator(textView);
 
-        String value1 = list.get(0);
-        String operator = list.get(1);
-        String value2 = list.get(2);
+                case "*":
+                    return removeOperator(textView);
 
-        switch (operator){
-            case "+":
-                return Double.valueOf(value1)+Double.valueOf(value2);
+                case "÷":
+                    return removeOperator(textView);
 
-            case "-":
-                return Double.valueOf(value1)-Double.valueOf(value2);
+                default:
+                    return textView;
 
-            case "*":
-                return Double.valueOf(value1)*Double.valueOf(value2);
+            }
+        }else{
+            return textView;
 
-            case "÷":
-                return Double.valueOf(value1)/Double.valueOf(value2);
-            case "=":
-
-            default:
-                return 0;
         }
     }
 
