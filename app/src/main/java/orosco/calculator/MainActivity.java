@@ -11,29 +11,31 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnSom,btnSub,btnMult,btnDiv,btnIgual,btnPonto,btnSinal,btnDel,btnAc;
     TextView textView,textViewOperators;
-    Double temp,tempReset;
-    Operators operador = new Operators();
+    Double temp;
     CheckValues check = new CheckValues();
     GetValues getValues = new GetValues();
 
     private void checkTextViewOperator(CharSequence button){
         if(textView.getText().length()>0){
-            if(button!="=") {
-                if (textViewOperators.getText() != button) {
+            if(!button.equals(btnIgual.getText())) {
+                if (!textViewOperators.getText().equals(button)) {
                     textViewOperators.setText(button);
-                } else if (temp == null) {
-                    temp = Double.valueOf(textView.getText().toString());
-                    textViewOperators.setText(button);
-                } else if (temp != null) {
-                    //do something
-                    textViewOperators.setText(button);
+                }else {
+                    if (temp == null) {
+                        temp = Double.valueOf(textView.getText().toString());
+                    } else if (temp != null) {
+                        temp = getValues.GetValues(temp, textView.getText().toString(), button.toString());
+                    }
+                    textView.setText("");
                 }
             }else{
-                //return textView.getText();
+                if(temp==null){
+                    temp=Double.valueOf(textView.getText().toString());
+                }else{
+                    textView.setText(String.valueOf(getValues.GetValues(temp, textView.getText().toString(), button.toString())));
+                    textViewOperators.setText(button);
+                }
             }
-
-            //temp=getValues.GetValues(textView.getText().toString(), temp, btnSom.getText().toString());
-            //textView.setText(operador.checkOperators(textView.getText().toString()) + " + ");
         }
     }
 
@@ -138,38 +140,32 @@ public class MainActivity extends AppCompatActivity {
 
         btnSub.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            if(textView.getText().length()>0)
-            {
-                textView.setText(operador.checkOperators(textView.getText().toString()) + " - ");
-            }else{
-                textView.append("-");
-            }
+                checkTextViewOperator(btnSub.getText());
+                /**
+                if(textView.getText().length()>0){
+                    textView.setText(operador.checkOperators(textView.getText().toString()) + " - ");
+                }else{
+                    textView.append("-");
+                }*/
             }
         });
 
         btnMult.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            if(textView.getText().length()>0)
-            {
-                textView.setText(operador.checkOperators(textView.getText().toString()) + " * ");
-            }
+                checkTextViewOperator(btnMult.getText());
             }
         });
 
         btnDiv.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            if(textView.getText().length()>0)
-            {
-                textView.setText(operador.checkOperators(textView.getText().toString()) + " ÷ ");
-            }
+                checkTextViewOperator(btnDiv.getText());
             }
         });
 
         btnIgual.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                checkTextViewOperator(btnIgual.getText());
                 //textView.setText(getValues.GetValues(textView.getText().toString(), temp, btnSom.getText().toString()));
-                textViewOperators.setText(btnIgual.getText());
-            //textView.setText(getValues.OperatorsList(textView.getText().toString()));
             }
         });
 

@@ -8,7 +8,7 @@ public class MakeCalcs {
 
     private  double resultado;
 
-    public double sum(String value1, String value2){
+    public double sum(Double value1, String value2){
         if(Double.valueOf(value1)==null){
             return Double.valueOf(value2);
         }else{
@@ -17,22 +17,22 @@ public class MakeCalcs {
         }
     }
 
-    public double sub(String value1, String value2){
-        if(Double.valueOf(value1)==null){
-            return Double.valueOf(value2);
+    public double sub(Double value1, String value2){
+        if(value1==null){
+            return (Double.valueOf(value2)*-1);
         }else{
-            resultado = Double.valueOf(value1) - Double.valueOf(value2);
+            resultado = value1 - Double.valueOf(value2);
             return resultado;
         }
     }
 
-    public double mult(String value1, String value2){
-        resultado = Double.valueOf(value1) * Double.valueOf(value2);
+    public double mult(Double value1, String value2){
+        resultado = value1 * Double.valueOf(value2);
         return resultado;
     }
 
-    public double div(String value1, String value2){
-        resultado = Double.valueOf(value1) / Double.valueOf(value2);
+    public double div(Double value1, String value2){
+        resultado = value1 / Double.valueOf(value2);
         return resultado;
     }
 }
