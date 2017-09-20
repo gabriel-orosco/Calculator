@@ -11,30 +11,28 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnSom,btnSub,btnMult,btnDiv,btnIgual,btnPonto,btnSinal,btnDel,btnAc;
     TextView textView,textViewOperators;
-    Double temp;
+    double temp=0;
+    String operatorValue="";
     CheckValues check = new CheckValues();
     GetValues getValues = new GetValues();
 
     private void checkTextViewOperator(CharSequence button){
         if(textView.getText().length()>0){
             if(!button.equals(btnIgual.getText())) {
-                if (!textViewOperators.getText().equals(button)) {
-                    textViewOperators.setText(button);
-                }else {
-                    if (temp == null) {
-                        temp = Double.valueOf(textView.getText().toString());
-                    } else if (temp != null) {
-                        temp = getValues.GetValues(temp, textView.getText().toString(), button.toString());
-                    }
-                    textView.setText("");
-                }
-            }else{
-                if(temp==null){
-                    temp=Double.valueOf(textView.getText().toString());
-                }else{
+                if (textViewOperators.getText().equals(button)) {
+                    operatorValue=button.toString();
+                    temp = Double.valueOf(textView.getText().toString());
+                }else if(operatorValue.length()>0){
                     textView.setText(String.valueOf(getValues.GetValues(temp, textView.getText().toString(), button.toString())));
                     textViewOperators.setText(button);
+                    operatorValue="";
+                    temp = Double.valueOf(textView.getText().toString());
                 }
+            }else if(operatorValue.length()>0){
+                textView.setText(String.valueOf(getValues.GetValues(temp, textView.getText().toString(), operatorValue)));
+            }else {
+                textView.setText(String.valueOf(getValues.GetValues(temp, textView.getText().toString(), button.toString())));
+
             }
         }
     }
@@ -165,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         btnIgual.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 checkTextViewOperator(btnIgual.getText());
+                textViewOperators.setText("");
                 //textView.setText(getValues.GetValues(textView.getText().toString(), temp, btnSom.getText().toString()));
             }
         });
@@ -182,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         btnAc.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 textView.setText("");
+                textViewOperators.setText("");
             }
         });
 
