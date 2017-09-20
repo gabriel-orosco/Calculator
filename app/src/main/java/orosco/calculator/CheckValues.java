@@ -14,7 +14,24 @@ public class CheckValues {
         }else {
             number+=button;
             return number;
+        }
+    }
 
+    public boolean checkDots (String display){
+        display= display.substring(display.length()-1,display.length());
+        if (!display.contains(".")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean checkBlankSpace(String display){
+        display= display.substring(display.length()-1,display.length());
+        if (display.contains(" ")){
+            return true;
+        }else{
+            return false;
         }
     }
 }

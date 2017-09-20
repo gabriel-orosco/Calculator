@@ -1,22 +1,41 @@
 package orosco.calculator;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 
     Button btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btn0,btnSom,btnSub,btnMult,btnDiv,btnIgual,btnPonto,btnSinal,btnDel,btnAc;
-    TextView textView;
+    TextView textView,textViewOperators;
+    Double temp,tempReset;
     Operators operador = new Operators();
-    CheckValues checkZero = new CheckValues();
+    CheckValues check = new CheckValues();
+    GetValues getValues = new GetValues();
+
+    private void checkTextViewOperator(CharSequence button){
+        if(textView.getText().length()>0){
+            if(button!="=") {
+                if (textViewOperators.getText() != button) {
+                    textViewOperators.setText(button);
+                } else if (temp == null) {
+                    temp = Double.valueOf(textView.getText().toString());
+                    textViewOperators.setText(button);
+                } else if (temp != null) {
+                    //do something
+                    textViewOperators.setText(button);
+                }
+            }else{
+                //return textView.getText();
+            }
+
+            //temp=getValues.GetValues(textView.getText().toString(), temp, btnSom.getText().toString());
+            //textView.setText(operador.checkOperators(textView.getText().toString()) + " + ");
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,61 +61,62 @@ public class MainActivity extends AppCompatActivity {
         btnDel = (Button)findViewById(R.id.Button_Del);
         btnAc = (Button)findViewById(R.id.Button_Ac);
         textView = (TextView) findViewById(R.id.TextViewDisplay);
+        textViewOperators = (TextView) findViewById(R.id.TextViewOperators);
 
 
         textView.setText(textView.getText(), TextView.BufferType.EDITABLE);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"1"));
+                textView.setText(check.checkValues(textView.getText().toString(),"1"));
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"2"));
+                textView.setText(check.checkValues(textView.getText().toString(),"2"));
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"3"));
+                textView.setText(check.checkValues(textView.getText().toString(),"3"));
             }
         });
 
         btn4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"4"));
+                textView.setText(check.checkValues(textView.getText().toString(),"4"));
             }
         });
 
         btn5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"5"));
+                textView.setText(check.checkValues(textView.getText().toString(),"5"));
             }
         });
 
         btn6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"6"));
+                textView.setText(check.checkValues(textView.getText().toString(),"6"));
             }
         });
 
         btn7.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"7"));
+                textView.setText(check.checkValues(textView.getText().toString(),"7"));
             }
         });
 
         btn8.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"8"));
+                textView.setText(check.checkValues(textView.getText().toString(),"8"));
             }
         });
 
         btn9.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText(checkZero.checkValues(textView.getText().toString(),"9"));
+                textView.setText(check.checkValues(textView.getText().toString(),"9"));
             }
         });
 
@@ -112,10 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnSom.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            if(textView.getText().length()>0)
-            {
-                textView.setText(operador.checkOperators(textView.getText().toString()) + " + ");
-            }
+                checkTextViewOperator(btnSom.getText());
             }
         });
 
@@ -150,8 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnIgual.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //operador.setList(textView.getText().toString());
-                //textView.setText(resultado);
+                //textView.setText(getValues.GetValues(textView.getText().toString(), temp, btnSom.getText().toString()));
+                textViewOperators.setText(btnIgual.getText());
+            //textView.setText(getValues.OperatorsList(textView.getText().toString()));
             }
         });
 
@@ -176,7 +194,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if(textView.getText().length()==0){
                     textView.setText("0.");
-                }else if(!textView.getText().toString().contains(".")){
+                }else if(check.checkBlankSpace(textView.getText().toString())){
+                    textView.append("0.");
+                }
+                    if(check.checkDots(textView.getText().toString())){
                     textView.append(".");
                 }
 
